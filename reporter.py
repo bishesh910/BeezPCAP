@@ -1,5 +1,6 @@
 import os
 from jinja2 import Environment, FileSystemLoader
+from weasyprint import HTML
 
 def generate_html_report(data, pcap_name, timestamp, output_file):
     env = Environment(loader=FileSystemLoader('templates'))
@@ -83,6 +84,7 @@ def generate_html_report(data, pcap_name, timestamp, output_file):
         {"title": "🖥️ RDP Sessions", "entries": [fmt_rdp(r) for r in data["rdp"]], "css": "dns"},
     ]
 
+    # Render HTML
     html = template.render(
         pcap_name=pcap_name,
         timestamp=timestamp,
@@ -91,6 +93,26 @@ def generate_html_report(data, pcap_name, timestamp, output_file):
         sections=sections
     )
 
-    with open(output_file, 'w') as f:
-        f.write(html)
+    # Decide output format
+    report_format = os.getenv("REPORT_FORMAT", "html").lower()
 
+    if report_format == "pdf":
+        try:
+            HTML(string=html).write_pdf(output_file)
+            print(f"[✅] PDF report generated: {output_file}")
+        except Exception as e:
+            print(f"[!] PDF generation failed: {e}")
+            print("[*] Writing fallback HTML instead.")
+            with open(output_file.replace(".pdf", ".html"), "w") as f:
+                f.write(html)
+    else:
+        with open(output_file, "w") as f:
+            f.write(html)
+
+
+def generate_pdf_report(html_path, output_pdf):
+    try:
+        HTML(html_path).write_pdf(output_pdf)
+        print(f"[✅] PDF report generated: {output_pdf}")
+    except Exception as e:
+        print(f"[!] PDF generation failed: {e}")

@@ -109,7 +109,8 @@ def run_beezpcap(pcap_file):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     pcap_name = os.path.splitext(os.path.basename(pcap_file))[0]
     output_path = os.path.join("output", f"{pcap_name}_{timestamp}")
-    report_name = f"report_{pcap_name}_{timestamp}.html"
+    report_ext = ".pdf" if os.getenv("REPORT_FORMAT", "").lower() == "pdf" else ".html"
+    report_name = f"report_{pcap_name}_{timestamp}{report_ext}"
 
     os.makedirs(output_path, exist_ok=True)
     os.makedirs(REPORTS_DIR, exist_ok=True)
