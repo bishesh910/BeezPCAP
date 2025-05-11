@@ -94,4 +94,3 @@ This tool is intended for **research and internal threat hunting** only. Use res
 
 Built with ❤️ by \[bishesh910]. I used ChatGPT to create this README file.
 
-```
