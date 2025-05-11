@@ -81,8 +81,6 @@ summary_prompt.txt                     ← AI prompt used for Mistral
 
 * Replace Ollama with OpenAI GPT if needed.
 * Extend IOC checks to domains and file names.
-* Add PDF export for reports.
-
 ---
 
 ## 🛡 Disclaimer
