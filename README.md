@@ -38,6 +38,7 @@ Create a `.env` file in the project root with the following:
 VT_API_KEY=your_virustotal_api_key
 ABUSE_API_KEY=your_abuseipdb_api_key
 AIMODULE=OLLAMA   # or set to DISABLE to skip AI summary
+REPORT_FORMAT=pdf
 ```
 
 ---
@@ -58,7 +59,7 @@ The report will be saved in the `reports/` folder.
 
 ```
 reports/
-├── report_<name>_<timestamp>.html    ← Final report
+├── report_<name>_<timestamp>.html/pdf    ← Final report
 output/
 ├── <pcap_name_timestamp>/            ← Zeek & Suricata logs
 ioc_cache.json                         ← IOC enrichment cache
